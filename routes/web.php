@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Webhooks\StripeWebhookController;
 use App\Livewire\Backups\BackupList;
 use App\Livewire\Dashboard\Overview;
 use App\Livewire\Observability\MetricsDashboard;
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// Stripe Webhooks (must be before CSRF middleware)
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])
+    ->name('stripe.webhook');
 
 // Public routes
 Route::get('/', function () {
